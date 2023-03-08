@@ -10,6 +10,8 @@ import {
 import '../../src/style.css'
 import { Outlet, Link } from "react-router-dom";
 import Profile from './Profile';
+import { Navbar } from "@nextui-org/react";
+
 const MyNavbar = () => {
 
   const dispatch = useAppDispatch()

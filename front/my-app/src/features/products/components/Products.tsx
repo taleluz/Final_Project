@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
-import { useParams, Link } from 'react-router-dom';
+
 import { selectProducts, getproductsAsync } from '../slices/productsSlice';
 import { Product } from '../../../models/products';
 import "../../../../src/cards.css"
+import { Link, useParams } from 'react-router-dom';
 const Products = () => {
   const { name } = useParams<{ name: string }>();
   console.log(name)
@@ -76,18 +77,22 @@ const Products = () => {
 
 
             <h2>{product.name}</h2>
+     
+           
             {/* <p>{product.desc}</p> */}
             <p className='price'>Price: {product.price}</p>
             {/* <p>Quantity: {product.quantity}</p>
             <p>Count in Stock: {product.count_in_stock}</p>
             <p>Category: {product.category}</p>
             <p>Subcategory: {product.subcategory}</p> */}
-            <img src={`http://127.0.0.1:8000${product.proimage}`}
-              width={200}
-              height={200}
-              alt={product.name} />
-
+            <Link to={`/product/${product.id}`}>
+              <img src={`http://127.0.0.1:8000${product.proimage}`}
+                width={200}
+                height={200}
+                alt={product.name} />
+            </Link>
             <button>Buy</button>
+
             <br></br>
             <br></br>
             <br></br>

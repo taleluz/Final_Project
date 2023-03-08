@@ -14,6 +14,7 @@ import GeneralGallery from './components/GeneralGallery';
 import Albums from './components/Albums';
 import AlbumsType from './components/AlbumsType';
 import Products from './features/products/components/Products';
+import ProductDetails from './features/products/components/ProductDetails';
 
 
 const container = document.getElementById('root')!;
@@ -28,9 +29,13 @@ root.render(
             <Route path="login" element={<Login />} />
             <Route path="profile" element={<Profile />} />
             <Route path="category" element={<Products />}> 
-            <Route path=":name" element={<Products />}/>
-            <Route path="upload" element={<GeneralGallery />}/> 
+              <Route path=":name" element={<Products />}/>
+              </Route>
+            <Route path="product" element={<ProductDetails />} >
+            <Route path=":id" element={<ProductDetails />}/>
             </Route>
+            <Route path="upload" element={<GeneralGallery />}/> 
+      
             <Route path="register" element={<Register />} />
             <Route path="contact" element={<Contact />} />
           </Route>
