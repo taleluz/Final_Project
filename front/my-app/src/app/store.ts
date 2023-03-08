@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import albumsReducer from '../features/albums/albumsSlice';
 import galleryReducer from '../features/gallery/gallerySlice';
 import loginReducer from '../features/login/loginSlice';
+import productsReducer from '../features/products/slices/productsSlice';
 import profileReducer from '../features/Profile/profileSlice';
 
 export const store = configureStore({
@@ -9,7 +10,8 @@ export const store = configureStore({
     login: loginReducer,
     gallery : galleryReducer,
     profile : profileReducer,
-    albums : albumsReducer
+    albums : albumsReducer,
+    products:productsReducer,
   },
 });
 

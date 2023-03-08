@@ -17,6 +17,7 @@ const MyNavbar = () => {
   const username = useAppSelector(selectUsername)
   const remember = localStorage.getItem("remember")
 
+
   useEffect(() => {
 
     const token = localStorage.getItem("refresh")
@@ -33,6 +34,8 @@ const MyNavbar = () => {
     setShowDropdown(!showDropdown);
   };
 
+
+  
   const [showDropdown, setShowDropdown] = useState(false);
   return (
     <div>
@@ -44,12 +47,13 @@ const MyNavbar = () => {
                 <button className="dropbtn" onClick={handleDropdownClick}> <img className="header__burger-icon entered lazyloaded" src="https://www.kaza.co.il/wp-content/themes/kaza/assets/img/icon-burger.png" alt="" width="26" height="19" data-lazy-src="https://www.kaza.co.il/wp-content/themes/kaza/assets/img/icon-burger.png" data-ll-status="loaded" /></button>
                 {showDropdown &&
                   <div className="dropdown-content">
-                    <Link to={'/category'}>Sofas</Link>
-                    <Link to={'/category'}>Shelves</Link>
-                    <Link to={'/category'}>Closets</Link>
-                    <Link to={'/category'}>Chairs</Link>
-                    <Link to={'/category'}>Tables</Link>
-                    <Link to={'/category'}>About</Link>
+                    <Link to={'/category/Sofas'} >Sofas</Link>
+                    <Link to={'/category/Shelves'}>Shelves</Link>
+                    <Link to={'/category/Closets'} >Closets</Link>
+                    <Link to={'/category/Chairs'} >Chairs</Link>
+                    <Link to={'/category/Tables'}>Tables</Link>
+                    <Link to={'/about'}>About</Link>
+
                   </div>
                 }
               </div>
