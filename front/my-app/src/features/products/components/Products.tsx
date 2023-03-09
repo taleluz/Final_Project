@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../../app/hooks';
 
 import { selectProducts, getproductsAsync } from '../slices/productsSlice';
 import { Product } from '../../../models/products';
-import "../../../../src/cards.css"
+import "../../../../src/styles/cards.css"
 import { Link, useParams } from 'react-router-dom';
 const Products = () => {
   const { name } = useParams<{ name: string }>();
