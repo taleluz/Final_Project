@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { removeFromCart, addItemQuantity, subtractItemQuantity } from "../slices/cartSlice";
 import { IoAddSharp, IoRemoveSharp } from "react-icons/io5";
 import  CartItemType  from "../../../models/cartItem";
-
+import  "../../../styles/details.css"
 interface Props {
 item: CartItemType;
 }
@@ -31,7 +31,7 @@ return (
 <div className="product-name">
 <h2>{name}</h2>
 <h2 className="product-price">${price}</h2>
-<button onClick={handleRemoveItem}>Remove from cart</button>
+<button  className="button-33" role="button" onClick={handleRemoveItem}>Remove from cart</button>
 </div>
 <div className="quantity">
 <button onClick={handleSubtractItemQuantity}>
