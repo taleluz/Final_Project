@@ -4,6 +4,8 @@ import { selectProducts } from '../slices/productsSlice';
 import { Product } from '../../../models/products';
 import { useParams } from 'react-router-dom';
 import '../../../styles/details.css';
+import { addToCart } from '../slices/cartSlice';
+import { RootState } from '../../../app/store';
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: any }>();
@@ -11,15 +13,19 @@ const ProductDetails = () => {
   const product: Product | undefined = products.find((product) => product.id === parseInt(id));
   const [quantity, setQuantity] = useState(1);
 
+  const dispatch = useAppDispatch();
+
   const incrementQuantity = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
+    setQuantity(prevQuantity => prevQuantity + 1);
   };
 
   const decrementQuantity = () => {
     if (quantity > 1) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
+      setQuantity(prevQuantity => prevQuantity - 1);
     }
   };
+
+
 
   return (
     <div className="details">
@@ -41,7 +47,11 @@ const ProductDetails = () => {
           </div>
           <p className="price">${product.price}</p>
 
-          <button className="button-33" role="button">Add to Cart</button>
+          <button onClick={() => dispatch(addToCart(
+            { id: product.id, image: `http://127.0.0.1:8000${product.proimage}`, name: product.name, price: product.price, quantity }))}
+           className="button-33" role="button">
+           Add to cart </button>
+         
         </div>
       </>
     ) : (

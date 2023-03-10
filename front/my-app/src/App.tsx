@@ -5,22 +5,25 @@ import { AcmeLogo } from "./features/Navbar/components/Acmelogo";
 import { VariantsSelectorWrapper } from "./features/Navbar/components/VariantsSelectorWrapper";
 
 import { ShoppingCart, Heart, User } from "react-feather";
-import  SearchIcon  from "./features/Navbar/components/SearchIcon";
-import { Outlet   } from 'react-router-dom';
+import SearchIcon from "./features/Navbar/components/SearchIcon";
+import { Outlet } from 'react-router-dom';
 import { Content } from "./features/Navbar/components/Content";
+import { useAppSelector } from "./app/hooks";
+import { Link as RouterLink  } from 'react-router-dom';
 
 
 
 
 export default function App(): JSX.Element {
-  
+
   const [variant, setVariant] = useState<"static" | "floating" | "sticky">("floating");
   const [activeColor, setActiveColor] = useState<"primary" | "secondary" | "success" | "warning" | "error">("primary");
-
+  const { quantity } = useAppSelector((state) => state.cart);
 
   const variants = ["static", "floating", "sticky"];
   const colors = ["primary", "secondary", "success", "warning", "error"];
-  
+
+
   const collapseItems = [
     { name: "Sofas", path: "/category/Sofas" },
     { name: "Shelves", path: "/category/Shelves" },
@@ -37,16 +40,16 @@ export default function App(): JSX.Element {
 
   return (
     <Layout>
-    <Navbar isBordered variant="sticky">
- 
-      <Navbar.Brand>
-        <Navbar.Toggle aria-label="toggle navigation" />
-        <AcmeLogo />
-        <Text b color="inherit" hideIn="xs">
-          ACME
-        </Text>
-      </Navbar.Brand>
-      <Navbar.Content
+      <Navbar isBordered variant="sticky">
+
+        <Navbar.Brand>
+          <Navbar.Toggle aria-label="toggle navigation" />
+          <AcmeLogo />
+          <Text b color="inherit" hideIn="xs">
+            ACME
+          </Text>
+        </Navbar.Brand>
+        <Navbar.Content
           css={{
             "@xsMax": {
               w: "100%",
@@ -82,19 +85,23 @@ export default function App(): JSX.Element {
               placeholder="Search..."
             />
           </Navbar.Item>
-        <Navbar.Link color="inherit" href="#">
-          <ShoppingCart size={18} />
-        </Navbar.Link>
+          <RouterLink to="/cart">
+            <ShoppingCart size={18} />
+            {quantity !== 0 && <span>{quantity}</span>}
+          </RouterLink>
 
-        <Navbar.Link color="inherit" href="#">
-          <Heart size={18} />
-        </Navbar.Link>
-        <Navbar.Link color="inherit" href="#">
-          <User size={18} />
-        </Navbar.Link>
-      </Navbar.Content> 
-     
-      <Navbar.Collapse>
+          <RouterLink to="#">
+            <Heart size={18} />
+          </RouterLink>
+
+          <RouterLink to="#">
+            <User size={18} />
+          </RouterLink>
+
+
+        </Navbar.Content>
+
+        <Navbar.Collapse>
           {collapseItems.map((item, index) => (
             <Navbar.CollapseItem key={item.name}>
               <Link
@@ -109,12 +116,11 @@ export default function App(): JSX.Element {
             </Navbar.CollapseItem>
           ))}
         </Navbar.Collapse>
-    </Navbar>
-    <Outlet />
+      </Navbar>
+      <Outlet />
 
-  </Layout>
+    </Layout >
   )
 }
-
 
 
