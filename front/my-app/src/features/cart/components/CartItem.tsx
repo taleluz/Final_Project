@@ -3,6 +3,7 @@ import { removeFromCart, addItemQuantity, subtractItemQuantity } from "../slices
 import { IoAddSharp, IoRemoveSharp } from "react-icons/io5";
 import  CartItemType  from "../../../models/cartItem";
 import  "../../../styles/details.css"
+import { Link } from "react-router-dom";
 interface Props {
 item: CartItemType;
 }
@@ -26,12 +27,14 @@ dispatch(subtractItemQuantity(item));
 return (
 <div className="cart-item">
 <div className="product-image">
-<img src={image} alt={name} />
+<Link to={`/product/${item.id}`}>
+    <img src={image} alt={name} />
+  </Link>
 </div>
 <div className="product-name">
 <h2>{name}</h2>
 <h2 className="product-price">${price}</h2>
-<button  className="button-33" role="button" onClick={handleRemoveItem}>Remove from cart</button>
+<button  className="button-33" role="button" onClick={handleRemoveItem}>Remove </button>
 </div>
 <div className="quantity">
 <button onClick={handleSubtractItemQuantity}>

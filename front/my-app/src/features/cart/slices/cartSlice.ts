@@ -1,16 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import CartItemType from "../../../models/cartItem"
+import { RootState, AppThunk } from "../../../app/store";
 
-interface CartState {
+
+
+export interface CartState {
   quantity: number;
   cartItems: CartItemType[];
   totalAmount: number;
+  showcart?: boolean;
+
 }
 
-const initialState: CartState = {
+ export const initialState: CartState  = {
   quantity: 0,
   cartItems: [],
   totalAmount: 0,
+  showcart: false
 };
 
 // Function to retrieve cart data from local storage
@@ -35,16 +41,23 @@ const saveState = (state: CartState) => {
     // Ignore write errors
   }
 }
-const updateCartInLocalStorage = (cartItems: CartItemType[], totalAmount: number, quantity:number) => {
-  const cartState = { cartItems, totalAmount ,quantity };
+const updateCartInLocalStorage = (cartItems: CartItemType[], 
+  totalAmount: number, quantity:number) => {
+  const cartState = { cartItems, totalAmount ,quantity  };
   saveState(cartState);
 };
 
-const cartSlice = createSlice({
+
+export const cartSlice = createSlice({
   name: "cart",
   initialState: loadState() || initialState, // initialize state from local storage if available
   reducers: {
+    
+
     addToCart: (state, { payload }: PayloadAction<CartItemType>) => {
+      
+      // console.log(state.quantity)
+
       const isItemExist = state.cartItems.find((item) => item.id === payload.id);
       if (!isItemExist) {
         state.cartItems = [...state.cartItems, { ...payload }];
@@ -54,13 +67,19 @@ const cartSlice = createSlice({
       } else {
         state.cartItems = state.cartItems.map((item) => {
           if (item.id === payload.id) {
-            return { ...item, quantity: item.quantity + 1 };
+            return { ...item, quantity: item.quantity + payload.quantity}
+                    
+          
           } else {
             return item;
           }
         });
       }
+    
       state.totalAmount += Number(payload.price) * payload.quantity;
+      state.quantity = state.cartItems.reduce((total, item) => total + item.quantity, 0);
+      // state.showcart = true;
+      // console.log(state.showcart)
       updateCartInLocalStorage(state.cartItems, state.totalAmount, state.quantity);
     },
     removeFromCart: (state, { payload }: PayloadAction<CartItemType>) => {
@@ -72,6 +91,25 @@ const cartSlice = createSlice({
 
       saveState(state);
     },
+    addProdQuantity: (state, { payload }: PayloadAction<CartItemType>) => {
+      const isItemExist = state.cartItems.find((item) => item.id === payload.id);
+      if (!isItemExist) {
+        state.cartItems = [...state.cartItems, { ...payload, quantity: 1 }];
+        state.quantity += 1;
+      } else {
+        state.cartItems = state.cartItems.map((item) => {
+          if (item.id === payload.id) {
+            return { ...item, quantity: item.quantity + 1 };
+          } else {
+            return item;
+          }
+        });
+        state.quantity += 1;
+      }
+      state.totalAmount += Number(payload.price);
+      saveState(state);
+    
+    },
     addItemQuantity: (state, { payload }: PayloadAction<CartItemType>) => {
       state.cartItems = state.cartItems.map((item) => {
         if (item.id === payload.id) {
@@ -81,7 +119,7 @@ const cartSlice = createSlice({
           return item;
         }
       });
-      state.quantity += payload.quantity
+      state.quantity += 1
       // state.quantity++;
       state.totalAmount += Number(payload.price);
 
@@ -97,11 +135,28 @@ const cartSlice = createSlice({
       } else {
         subItem!.quantity -= 1;
       }
-      state.quantity--;
+      state.quantity -= 1;
       state.totalAmount -= Number(subItem!.price);
 
       saveState(state);
     },
+
+    toggleShowCart: (state) => {
+      state.showcart =! state.showcart
+      console.log(state.showcart)
+    },
+    // //////////////////////////FIX////////////////////////////
+    clearCart: (state )=> {
+      console.log("first")
+      state.cartItems = [];
+      state.totalAmount = 0;
+      state.quantity = 0;
+      state.showcart =! state.showcart
+      saveState(state);
+      
+    },
+
+
   },
 });
 
@@ -110,6 +165,12 @@ export const {
   removeFromCart,
   addItemQuantity,
   subtractItemQuantity,
+  addProdQuantity,
+  clearCart,
+  toggleShowCart
 } = cartSlice.actions;
+
+// export const selectLooged = (state: RootState) => state.cart.showcart;
+
 
 export default cartSlice.reducer;

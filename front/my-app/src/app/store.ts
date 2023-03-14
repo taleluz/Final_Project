@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import albumsReducer from '../features/albums/albumsSlice';
+import cartReducer from '../features/cart/slices/cartSlice';
 import galleryReducer from '../features/gallery/gallerySlice';
 import loginReducer from '../features/login/loginSlice';
-import cartReducer from '../features/products/slices/cartSlice';
 import productsReducer from '../features/products/slices/productsSlice';
 import profileReducer from '../features/Profile/profileSlice';
+
+
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +15,7 @@ export const store = configureStore({
     profile : profileReducer,
     albums : albumsReducer,
     products:productsReducer,
-    cart:cartReducer
+    cart: cartReducer
   },
 });
 

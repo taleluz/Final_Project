@@ -15,7 +15,7 @@ import Albums from './components/Albums';
 import AlbumsType from './components/AlbumsType';
 import Products from './features/products/components/Products';
 import ProductDetails from './features/products/components/ProductDetails';
-import Cart from './features/products/components/Cart';
+import Cart from './features/cart/components/Cart';
 
 
 const container = document.getElementById('root')!;

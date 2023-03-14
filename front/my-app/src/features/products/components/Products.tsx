@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
+import { addProdQuantity, toggleShowCart } from '../../cart/slices/cartSlice';
 
 import { selectProducts, getproductsAsync } from '../slices/productsSlice';
 import { Product } from '../../../models/products';
 import "../../../../src/styles/cards.css"
 import { Link, useParams } from 'react-router-dom';
+import Cart from '../../cart/components/Cart';
+
 const Products = () => {
   const { name } = useParams<{ name: string }>();
   console.log(name)
@@ -12,6 +15,9 @@ const Products = () => {
   const dispatch = useAppDispatch();
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(name);
   const [selectedSubcat, setSelectedSubcat] = useState<string | null>(null);
+
+
+ 
 
   const filteredProducts = selectedSubcat
     ? products.filter((product) => product.category === selectedCategory && product.subcategory === selectedSubcat)
@@ -28,47 +34,66 @@ const Products = () => {
     setSelectedCategory(category);
     setSelectedSubcat(subcat);
   };
+
+  const handleAddToCart = (product:any) => {
+    dispatch(toggleShowCart())
+    dispatch(addProdQuantity(  { id: product.id,
+       image: `http://127.0.0.1:8000${product.proimage}`,
+        name: product.name,
+         price: product.price, 
+         quantity:1 }));
+  };
+
   useEffect(() => {
     console.log('Fetching products with name:', name);
     dispatch(getproductsAsync());
   }, [selectedCategory]);
 
+  useEffect(() => {
+    const subcats = selectedCategory
+      ? [...new Set(products.filter((product) => product.category === selectedCategory).map((product) => product.subcategory))]
+      : [...new Set(products.map((product) => product.subcategory))];
+      setSelectedSubcat(null);
+      // setSelectedSubcat(subcats);
+  }, [selectedCategory, products]);
+  
+
   return (
     <div>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-
+   
+  
       <div>
-
+   <div className="subcategories-container">
         {filteredSubcats.map((subcat) => (
           <span key={subcat}>
             {' '}
             <Link
               to="#"
               onClick={() => handleSubcatClick(selectedCategory ? selectedCategory : "", subcat)}
+              className="subcategory-link"
               style={{
-                backgroundImage: `url(http://127.0.0.1:8000${filteredProducts.find((product) => product.subcategory === subcat)?.subimage
-                  })`,
+                backgroundImage: `url(http://127.0.0.1:8000${filteredProducts.find(
+                  (product) =>
+                    product.category === selectedCategory &&
+                    product.subcategory === subcat
+                )?.subimage})`,
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
-                display: "inline-block",
-                width: "100px",
-                height: "100px",
-                margin: "10px",
               }}
             >
-              {subcat}
+              <br></br>
+            {subcat}
             </Link>
             |
           </span>
+        
         ))}
         <span>
           <Link to="#" onClick={() => setSelectedSubcat(null)}>
             All
           </Link>
         </span>
+      </div>
       </div>
       <div>
         {filteredProducts.map((product) => (
@@ -77,29 +102,28 @@ const Products = () => {
 
 
             <h2>{product.name}</h2>
-     
+  
            
-            {/* <p>{product.desc}</p> */}
-            <p className='price'>Price: {product.price}</p>
-            {/* <p>Quantity: {product.quantity}</p>
-            <p>Count in Stock: {product.count_in_stock}</p>
-            <p>Category: {product.category}</p>
-            <p>Subcategory: {product.subcategory}</p> */}
             <Link to={`/product/${product.id}`}>
               <img src={`http://127.0.0.1:8000${product.proimage}`}
                 width={200}
                 height={200}
                 alt={product.name} />
             </Link>
-            <button>Buy</button>
+            <div className="product">
+            <div className='buttons'>
+            <button  type="button" data-bs-toggle="offcanvas" 
+            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" 
+             onClick={() =>handleAddToCart(product)} >Add to Cart</button>
 
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
+          <Link to={`/product/${product.id}`}><button>View Details</button></Link>
+          </div>
+          </div>
+           
 
           </div>
         ))}
+        <Link to="/cart"  onClick={()=>{dispatch(toggleShowCart())}}>Testtttttttttttt</Link>
       </div>
     </div>
   );

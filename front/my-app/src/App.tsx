@@ -8,8 +8,9 @@ import { ShoppingCart, Heart, User } from "react-feather";
 import SearchIcon from "./features/Navbar/components/SearchIcon";
 import { Outlet } from 'react-router-dom';
 import { Content } from "./features/Navbar/components/Content";
-import { useAppSelector } from "./app/hooks";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { Link as RouterLink  } from 'react-router-dom';
+import { toggleShowCart } from "./features/cart/slices/cartSlice";
 
 
 
@@ -22,6 +23,8 @@ export default function App(): JSX.Element {
 
   const variants = ["static", "floating", "sticky"];
   const colors = ["primary", "secondary", "success", "warning", "error"];
+  const dispatch = useAppDispatch();
+
 
 
   const collapseItems = [
@@ -85,7 +88,7 @@ export default function App(): JSX.Element {
               placeholder="Search..."
             />
           </Navbar.Item>
-          <RouterLink to="/cart">
+          <RouterLink to="/cart" onClick={() => dispatch(toggleShowCart())}>
             <ShoppingCart size={18} />
             {quantity !== 0 && <span>{quantity}</span>}
           </RouterLink>
