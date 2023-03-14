@@ -5,28 +5,23 @@ import { RootState } from "../../../app/store";
 import CartItemType from "../../../models/cartItem";
 import "../../../styles/cart.css";
 import CartItem from "./CartItem";
-import { clearCart, toggleShowCart } from "../slices/cartSlice";
+import { clearCart } from "../slices/cartSlice";
 
 
 const Cart = () => {
   const dispatch = useAppDispatch();
-  const { cartItems, totalAmount, quantity, showcart } = useAppSelector((state: RootState) => state.cart);
-  // console.log(quantity)
-  console.log(showcart)
+  const { cartItems, totalAmount, quantity } = useAppSelector((state: RootState) => state.cart);
 
   if (quantity === 0) {
     return <h2 className="no-items">No items in cart...</h2>;
   }
 
-  // const removeAllItemsFromCart = () =>{
-  //     dispatch(clearCart());
-  //   };
 
   return (
     <div>
 
 
-      <div
+      {/* <div
         className={`offcanvas offcanvas-end ${showcart ? "show" : ""}`}
         tabIndex={-1}
         id="offcanvasRight"
@@ -51,16 +46,16 @@ const Cart = () => {
           <div className="d-flex justify-content-between mt-3">
             <strong>Total:</strong>
             <span>${totalAmount.toFixed(2)}</span>
-          </div>
+          </div> */}
 
-          <button
+          {/* <button
             className="btn btn-danger mt-3"
-            onClick={()=> dispatch(clearCart)}
+            onClick={removeAllItemsFromCart}
           >
             Clear Cart
-          </button>
-        </div>
-      </div>
+          </button> */}
+        {/* </div>
+      </div> */}
     </div>
   );
 };

@@ -8,16 +8,16 @@ export interface CartState {
   quantity: number;
   cartItems: CartItemType[];
   totalAmount: number;
-  showcart?: boolean;
+  wishlistquantity?:number
 
 }
 
  export const initialState: CartState  = {
-  quantity: 0,
-  cartItems: [],
-  totalAmount: 0,
-  showcart: false
-};
+   quantity: 0,
+   cartItems: [],
+   totalAmount: 0,
+   wishlistquantity: 0
+ };
 
 // Function to retrieve cart data from local storage
 const loadState = (): CartState | undefined => {
@@ -78,8 +78,14 @@ export const cartSlice = createSlice({
     
       state.totalAmount += Number(payload.price) * payload.quantity;
       state.quantity = state.cartItems.reduce((total, item) => total + item.quantity, 0);
-      // state.showcart = true;
-      // console.log(state.showcart)
+      updateCartInLocalStorage(state.cartItems, state.totalAmount, state.quantity);
+    },
+    addToWishlist: (state, { payload }: PayloadAction<CartItemType>) => {
+      
+      
+    
+      state.totalAmount += Number(payload.price) * payload.quantity;
+      state.quantity = state.cartItems.reduce((total, item) => total + item.quantity, 0);
       updateCartInLocalStorage(state.cartItems, state.totalAmount, state.quantity);
     },
     removeFromCart: (state, { payload }: PayloadAction<CartItemType>) => {
@@ -120,7 +126,6 @@ export const cartSlice = createSlice({
         }
       });
       state.quantity += 1
-      // state.quantity++;
       state.totalAmount += Number(payload.price);
 
       saveState(state);
@@ -141,17 +146,13 @@ export const cartSlice = createSlice({
       saveState(state);
     },
 
-    toggleShowCart: (state) => {
-      state.showcart =! state.showcart
-      console.log(state.showcart)
-    },
+ 
     // //////////////////////////FIX////////////////////////////
     clearCart: (state )=> {
       console.log("first")
       state.cartItems = [];
       state.totalAmount = 0;
       state.quantity = 0;
-      state.showcart =! state.showcart
       saveState(state);
       
     },
@@ -167,7 +168,7 @@ export const {
   subtractItemQuantity,
   addProdQuantity,
   clearCart,
-  toggleShowCart
+  addToWishlist
 } = cartSlice.actions;
 
 // export const selectLooged = (state: RootState) => state.cart.showcart;

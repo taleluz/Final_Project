@@ -4,10 +4,10 @@ import { selectProducts } from '../slices/productsSlice';
 import { Product } from '../../../models/products';
 import { Link, useParams } from 'react-router-dom';
 import '../../../styles/details.css';
-import { addToCart, toggleShowCart } from '../../cart/slices/cartSlice';
+import { addToCart } from '../../cart/slices/cartSlice';
 import { RootState } from '../../../app/store';
 import { IoArrowBack } from 'react-icons/io5';
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineHeart } from "react-icons/ai";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: any }>();
@@ -27,10 +27,12 @@ const ProductDetails = () => {
     }
   };
 
-  const handleAddToCart = (product:any) => {
-    dispatch(addToCart(   { id: product.id, image: `http://127.0.0.1:8000${product.proimage}`, 
-        name: product.name, price: product.price, quantity }))}
-    dispatch(toggleShowCart())
+  const handleAddToCart = (product: any) => {
+    dispatch(addToCart({
+      id: product.id, image: `http://127.0.0.1:8000${product.proimage}`,
+      name: product.name, price: product.price, quantity
+    }))
+  }
 
   return (
     <div className="details">
@@ -54,23 +56,26 @@ const ProductDetails = () => {
               <label htmlFor="quantity">Quantity:</label>
               <button onClick={decrementQuantity}>-</button>
               <input type="number" id="quantity" value={quantity}
-               onChange={(e) => setQuantity(parseInt(e.target.value))} />
+                onChange={(e) => setQuantity(parseInt(e.target.value))} />
               <button onClick={incrementQuantity}>+</button>
             </div>
             <p className="price">${product.price}</p>
 
-       
-            <button  className="button-33"
+
+            <button className="button-33"
               type="button"
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasRight"
-              aria-controls="offcanvasRight" onClick={() =>handleAddToCart(product)} 
-            //   onClick={() => dispatch(addToCart(
-            //     { id: product.id, image: `http://127.0.0.1:8000${product.proimage}`, 
-            //     name: product.name, price: product.price, quantity }))}
-            //  role="button"
-              >
+              aria-controls="offcanvasRight" onClick={() => handleAddToCart(product)}
+
+
+            >
               Add to cart </button>
+            <button className="wishlist-button" type="button">
+              <Link to="/wishlist">
+                <AiOutlineHeart />
+              </Link>
+            </button>
 
           </div>
         </>

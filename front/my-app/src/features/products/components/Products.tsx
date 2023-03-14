@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
-import { addProdQuantity, toggleShowCart } from '../../cart/slices/cartSlice';
+import { addProdQuantity } from '../../cart/slices/cartSlice';
 
 import { selectProducts, getproductsAsync } from '../slices/productsSlice';
 import { Product } from '../../../models/products';
@@ -36,7 +36,6 @@ const Products = () => {
   };
 
   const handleAddToCart = (product:any) => {
-    dispatch(toggleShowCart())
     dispatch(addProdQuantity(  { id: product.id,
        image: `http://127.0.0.1:8000${product.proimage}`,
         name: product.name,
@@ -54,7 +53,6 @@ const Products = () => {
       ? [...new Set(products.filter((product) => product.category === selectedCategory).map((product) => product.subcategory))]
       : [...new Set(products.map((product) => product.subcategory))];
       setSelectedSubcat(null);
-      // setSelectedSubcat(subcats);
   }, [selectedCategory, products]);
   
 
@@ -112,8 +110,10 @@ const Products = () => {
             </Link>
             <div className="product">
             <div className='buttons'>
-            <button  type="button" data-bs-toggle="offcanvas" 
-            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" 
+            <button  className="btn btn-primary" type="button"
+           data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" 
+           aria-controls="offcanvasRight" 
+        
              onClick={() =>handleAddToCart(product)} >Add to Cart</button>
 
           <Link to={`/product/${product.id}`}><button>View Details</button></Link>
@@ -123,7 +123,7 @@ const Products = () => {
 
           </div>
         ))}
-        <Link to="/cart"  onClick={()=>{dispatch(toggleShowCart())}}>Testtttttttttttt</Link>
+
       </div>
     </div>
   );
