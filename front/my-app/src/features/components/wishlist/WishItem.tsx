@@ -1,28 +1,30 @@
 import { useDispatch } from "react-redux";
-import { removeFromCart, addItemQuantity, subtractItemQuantity } from "../slices/cartSlice";
 import { IoAddSharp, IoRemoveSharp } from "react-icons/io5";
 import  CartItemType  from "../../../models/cartItem";
 import  "../../../styles/details.css"
 import { Link } from "react-router-dom";
+import { removeFromWishlist } from "../../../services/wishlistSlice";
+import { addToCart } from "../../../services/cartSlice";
 interface Props {
 item: CartItemType;
 }
 
-const CartItem: React.FC<Props> = ({ item }) => {
+const WishItem: React.FC<Props> = ({ item }) => {
 const dispatch = useDispatch();
 const { image, name, price, quantity } = item;
 
 const handleRemoveItem = (): void => {
-dispatch(removeFromCart(item));
+dispatch(removeFromWishlist(item));
 };
 
-const handleAddItemQuantity = (): void => {
-dispatch(addItemQuantity(item));
-};
+const handleAddToCart = (product: any) => {
+  dispatch(addToCart({
+    id: product.id, image: `http://127.0.0.1:8000${product.proimage}`,
+    name: product.name, price: product.price, quantity
+  }))
+}
 
-const handleSubtractItemQuantity = (): void => {
-dispatch(subtractItemQuantity(item));
-};
+  
 
 return (
 <div className="cart-item">
@@ -35,18 +37,10 @@ return (
 <h2>{name}</h2>
 <h2 className="product-price">${price}</h2>
 <button  className="button-33" role="button" onClick={handleRemoveItem}>Remove </button>
-</div>
-<div className="quantity">
-<button onClick={handleSubtractItemQuantity}>
-<IoRemoveSharp />
-</button>
-<p>{quantity}</p>
-<button onClick={handleAddItemQuantity}>
-<IoAddSharp />
-</button>
+<button  className="button-33" role="button" onClick={handleAddToCart}>Add to cart </button>
 </div>
 </div>
 );
 };
 
-export default CartItem;
+export default WishItem;

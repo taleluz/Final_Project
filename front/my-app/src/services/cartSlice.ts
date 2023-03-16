@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import CartItemType from "../../../models/cartItem"
-import { RootState, AppThunk } from "../../../app/store";
+import CartItemType from "../models/cartItem";
 
 
 
@@ -80,14 +79,7 @@ export const cartSlice = createSlice({
       state.quantity = state.cartItems.reduce((total, item) => total + item.quantity, 0);
       updateCartInLocalStorage(state.cartItems, state.totalAmount, state.quantity);
     },
-    addToWishlist: (state, { payload }: PayloadAction<CartItemType>) => {
-      
-      
-    
-      state.totalAmount += Number(payload.price) * payload.quantity;
-      state.quantity = state.cartItems.reduce((total, item) => total + item.quantity, 0);
-      updateCartInLocalStorage(state.cartItems, state.totalAmount, state.quantity);
-    },
+   
     removeFromCart: (state, { payload }: PayloadAction<CartItemType>) => {
       state.cartItems = state.cartItems.filter(
         (item) => item.id !== payload.id
@@ -146,9 +138,7 @@ export const cartSlice = createSlice({
       saveState(state);
     },
 
- 
-    // //////////////////////////FIX////////////////////////////
-    clearCart: (state )=> {
+     clearCart: (state )=> {
       console.log("first")
       state.cartItems = [];
       state.totalAmount = 0;
@@ -168,10 +158,8 @@ export const {
   subtractItemQuantity,
   addProdQuantity,
   clearCart,
-  addToWishlist
 } = cartSlice.actions;
 
-// export const selectLooged = (state: RootState) => state.cart.showcart;
 
 
 export default cartSlice.reducer;

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
-import { selectProducts } from '../slices/productsSlice';
 import { Product } from '../../../models/products';
 import { Link, useParams } from 'react-router-dom';
 import '../../../styles/details.css';
-import { addToCart } from '../../cart/slices/cartSlice';
 import { RootState } from '../../../app/store';
 import { IoArrowBack } from 'react-icons/io5';
 import { AiOutlineArrowLeft, AiOutlineHeart } from "react-icons/ai";
+import { selectProducts } from '../../../services/productsSlice';
+import { addToWishlist } from '../../../services/wishlistSlice';
+import { addToCart } from '../../../services/cartSlice';
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: any }>();
@@ -26,7 +27,13 @@ const ProductDetails = () => {
       setQuantity(prevQuantity => prevQuantity - 1);
     }
   };
-
+  const handleAddToWishlist = (product: any) => {
+    dispatch(addToWishlist({
+      id: product.id, image: `http://127.0.0.1:8000${product.proimage}`,
+      name: product.name, price: product.price, quantity
+    }))
+  }
+  
   const handleAddToCart = (product: any) => {
     dispatch(addToCart({
       id: product.id, image: `http://127.0.0.1:8000${product.proimage}`,
@@ -71,11 +78,20 @@ const ProductDetails = () => {
 
             >
               Add to cart </button>
-            <button className="wishlist-button" type="button">
-              <Link to="/wishlist">
+
+       
+              <button className="btn btn-primary"
+                type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvas2"
+                aria-controls="offcanvas2" onClick={() => handleAddToWishlist(product)}>
                 <AiOutlineHeart />
-              </Link>
-            </button>
+
+              </button>
+
+
+              {/* <Link to="/wishlist">
+                <AiOutlineHeart />
+              </Link> */}
 
           </div>
         </>

@@ -1,12 +1,12 @@
 import axios from "axios"
 
-import {MY_SERVER_PRODUCTS} from "../../../env"
-import {Product} from "../../../models/products"
+import { MY_SERVER_PRODUCTS } from "../env";
+import { Product } from "../models/products";
 
 export function getproducts() {
   // console.log(cred)
   return new Promise<{ data: Product[] }>((resolve) =>
-    axios.get(MY_SERVER_PRODUCTS ).then(res => resolve({ data: res.data }))
+    axios.get( MY_SERVER_PRODUCTS).then(res => resolve({ data: res.data }))
   );
 }
 

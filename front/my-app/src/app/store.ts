@@ -1,10 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import albumsReducer from '../features/albums/albumsSlice';
-import cartReducer from '../features/cart/slices/cartSlice';
 import galleryReducer from '../features/gallery/gallerySlice';
 import loginReducer from '../features/login/loginSlice';
-import productsReducer from '../features/products/slices/productsSlice';
 import profileReducer from '../features/Profile/profileSlice';
+import cartReducer from '../services/cartSlice';
+import productsReducer from '../services/productsSlice';
+import wishlistReducer from '../services/wishlistSlice';
 
 
 
@@ -14,8 +15,10 @@ export const store = configureStore({
     gallery : galleryReducer,
     profile : profileReducer,
     albums : albumsReducer,
-    products:productsReducer,
-    cart: cartReducer
+    products: productsReducer,
+    cart:cartReducer,
+    wishlist:wishlistReducer
+   
   },
 });
 

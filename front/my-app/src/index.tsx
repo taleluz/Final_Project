@@ -13,10 +13,11 @@ import Contact from './components/Contact';
 import GeneralGallery from './components/GeneralGallery';
 import Albums from './components/Albums';
 import AlbumsType from './components/AlbumsType';
-import Products from './features/products/components/Products';
-import ProductDetails from './features/products/components/ProductDetails';
-import Cart from './features/cart/components/Cart';
-import Wishlist from './features/wishlist/components/Wishlist';
+import ProductDetails from './features/components/products/ProductDetails';
+import Cart from './features/components/cart/Cart';
+import Wishlist from './features/components/wishlist/Wishlist';
+import Products from './features/components/products/Products';
+
 
 
 const container = document.getElementById('root')!;

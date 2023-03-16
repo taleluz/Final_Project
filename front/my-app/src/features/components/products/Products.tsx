@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
-import { addProdQuantity } from '../../cart/slices/cartSlice';
 
-import { selectProducts, getproductsAsync } from '../slices/productsSlice';
 import { Product } from '../../../models/products';
 import "../../../../src/styles/cards.css"
 import { Link, useParams } from 'react-router-dom';
-import Cart from '../../cart/components/Cart';
+import { getproductsAsync, selectProducts } from '../../../services/productsSlice';
+import { addProdQuantity } from '../../../services/cartSlice';
 
 const Products = () => {
   const { name } = useParams<{ name: string }>();
@@ -108,6 +107,10 @@ const Products = () => {
                 height={200}
                 alt={product.name} />
             </Link>
+
+    
+
+
             <div className="product">
             <div className='buttons'>
             <button  className="btn btn-primary" type="button"

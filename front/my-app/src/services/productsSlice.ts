@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../../app/store';
 import jwt_decode from "jwt-decode";
-import {getproducts} from "../api/productsAPI"
-import {Product} from "../../../models/products"
+import { RootState } from '../app/store';
+import { Product } from '../models/products';
+import { getproducts } from './productsAPI';
 
 export interface LoginState {
  products : Product[]
@@ -11,8 +11,6 @@ export interface LoginState {
 const initialState: LoginState = {
   products: []
 };
-
-
 
 
 export const getproductsAsync = createAsyncThunk(
