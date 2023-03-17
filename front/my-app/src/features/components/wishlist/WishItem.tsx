@@ -3,26 +3,29 @@ import { IoAddSharp, IoRemoveSharp } from "react-icons/io5";
 import  CartItemType  from "../../../models/cartItem";
 import  "../../../styles/details.css"
 import { Link } from "react-router-dom";
-import { removeFromWishlist } from "../../../services/wishlistSlice";
-import { addToCart } from "../../../services/cartSlice";
+import { removeFromWishlist, addWishlistItemToCart } from "../../../services/wishlistSlice";
+import { addProdQuantity, addToCart } from "../../../services/cartSlice";
 interface Props {
 item: CartItemType;
 }
 
 const WishItem: React.FC<Props> = ({ item }) => {
 const dispatch = useDispatch();
-const { image, name, price, quantity } = item;
+const { image, name, price, quantity ,id} = item;
 
 const handleRemoveItem = (): void => {
 dispatch(removeFromWishlist(item));
 };
 
-const handleAddToCart = (product: any) => {
-  dispatch(addToCart({
-    id: product.id, image: `http://127.0.0.1:8000${product.proimage}`,
-    name: product.name, price: product.price, quantity
-  }))
-}
+
+  const handleAddToCart = (product:any) => {
+    dispatch(addProdQuantity(  { id: product.id,
+       image: product.image,
+        name: product.name,
+         price: product.price, 
+         quantity:1 }));
+         handleRemoveItem()
+  };
 
   
 
@@ -37,10 +40,11 @@ return (
 <h2>{name}</h2>
 <h2 className="product-price">${price}</h2>
 <button  className="button-33" role="button" onClick={handleRemoveItem}>Remove </button>
-<button  className="button-33" role="button" onClick={handleAddToCart}>Add to cart </button>
+<button  className="button-33" role="button" onClick={()=>handleAddToCart(item)}>Add to cart </button>
 </div>
 </div>
 );
 };
 
 export default WishItem;
+

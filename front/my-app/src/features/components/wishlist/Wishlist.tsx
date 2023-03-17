@@ -7,6 +7,7 @@ import WishItem from './WishItem';
 
 const Wishlist = () => {
   const dispatch = useAppDispatch();
+
   const { cartItems, totalAmount, quantity } = useAppSelector((state: RootState) => state.wishlist);
 
   return (

@@ -90,6 +90,7 @@ export const cartSlice = createSlice({
       saveState(state);
     },
     addProdQuantity: (state, { payload }: PayloadAction<CartItemType>) => {
+      console.log(payload)
       const isItemExist = state.cartItems.find((item) => item.id === payload.id);
       if (!isItemExist) {
         state.cartItems = [...state.cartItems, { ...payload, quantity: 1 }];

@@ -34,7 +34,7 @@ const Cart = () => {
             ))}
             <div className="d-flex justify-content-between mt-3">
               <strong>Total:</strong>
-              <span>${totalAmount.toFixed(2)}</span>
+              <span>${totalAmount ? totalAmount.toFixed(2) : '0.00'}</span>
               <button
                 className="btn btn-danger mt-3"
                 onClick={() => dispatch(clearCart())}
