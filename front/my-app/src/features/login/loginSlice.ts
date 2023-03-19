@@ -32,7 +32,10 @@ export const registerAsync = createAsyncThunk(
 export const loginAsync = createAsyncThunk(
   'login/login',
   async (cred: Icred) => {
+    console.log(cred)
     const response = await login(cred);
+    // console.log(response)
+
     return response.data;
   }
 );
@@ -61,6 +64,8 @@ export const loginSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginAsync.fulfilled, (state, action) => {
+            console.log(action.payload)
+
       state.logged = true
       //  console.log (jwt_decode<any>(action.payload.refresh))
        state.access = action.payload.access

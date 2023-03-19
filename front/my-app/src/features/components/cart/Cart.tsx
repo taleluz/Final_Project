@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { Dispatch, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { RootState } from "../../../app/store";
@@ -7,21 +7,25 @@ import { clearCart } from "../../../services/cartSlice";
 import "../../../styles/cart.css";
 import CartItem from "./CartItem";
 import "../../../styles/cart.css";
+import { Link } from "react-router-dom";
+import { selectLooged } from "../../login/loginSlice";
 
 const Cart = () => {
   const dispatch = useAppDispatch();
   const { cartItems, totalAmount, quantity } = useAppSelector((state: RootState) => state.cart);
+  const logged = useAppSelector(selectLooged)
 
- 
+
+
   return (
-          /* style to center the header text to middle in wishlistItem component from cart.css */
+    /* style to center the header text to middle in wishlistItem component from cart.css */
     <div className="offcanvas offcanvas-end" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div className="offcanvas-header">
-      <h4 className="offcanvas-title" id="offcanvasRightLabel">Cart</h4>
-      <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+      <div className="offcanvas-header">
+        <h4 className="offcanvas-title" id="offcanvasRightLabel">Cart</h4>
+        <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
 
-    <div className="offcanvas-body">
+      <div className="offcanvas-body">
         {quantity === 0 ? (
           <h2 className="no-items">No items in cart...</h2>
         ) : (
@@ -37,12 +41,23 @@ const Cart = () => {
               >
                 Clear Cart
               </button>
-              <button
-                className="btn btn-danger mt-3"
-                onClick={() => dispatch(clearCart())}
-              >
-              CheckOut
-              </button>
+
+              {logged ? (
+                <button type="button" className="btn btn-danger mt-3" data-bs-dismiss="offcanvas"
+                  aria-label="Close">
+                  <Link to="/checkout">
+                    Checkout
+                  </Link>
+                </button>
+
+              ) : (
+                <button type="button" className="btn btn-danger mt-3" data-bs-dismiss="offcanvas"
+                  aria-label="Close">
+                  <Link to="/auth">
+                    Checkout
+                  </Link>
+                </button>
+              )}
             </div>
           </>
         )}

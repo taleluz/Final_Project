@@ -8,14 +8,17 @@ import { clearCart } from "./services/cartSlice"
 import { RootState } from "./app/store";
 import "../src/styles/cart.css";
 import Cart from "./features/components/cart/Cart";
-import Wishlist  from "./features/components/wishlist/Wishlist"
+import Wishlist from "./features/components/wishlist/Wishlist"
 import CartItem from "./features/components/cart/CartItem";
 import { Content } from "./features/components/navbar/Content";
 import SearchIcon from "./features/components/navbar/SearchIcon";
 import { VariantsSelectorWrapper } from "./features/components/navbar/VariantsSelectorWrapper";
 import { Layout } from "./features/components/navbar/Layout";
 import { AcmeLogo } from "./features/components/navbar/Acmelogo";
-import {} from "./services/wishlistSlice";
+import { } from "./services/wishlistSlice";
+import {
+  loginAsync, selectLooged, logout, selectAccess, selectUsername
+} from './features/login/loginSlice';
 
 export default function App(): JSX.Element {
 
@@ -25,8 +28,9 @@ export default function App(): JSX.Element {
   const colors = ["primary", "secondary", "success", "warning", "error"];
   const dispatch = useAppDispatch();
   const { cartItems, totalAmount, quantity } = useAppSelector((state: RootState) => state.cart);
-  const {  quantity: wishlistQuantity   } = useAppSelector((state: RootState) => state.wishlist);
-
+  const { quantity: wishlistQuantity } = useAppSelector((state: RootState) => state.wishlist);
+  const logged = useAppSelector(selectLooged)
+  const username = useAppSelector(selectUsername)
 
 
 
@@ -89,7 +93,7 @@ export default function App(): JSX.Element {
               placeholder="Search..."
             />
           </Navbar.Item>
-          <button className="btn btn-primary" type="button"
+          <button className="btn btn-outline-dark" type="button"
             data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight" >
             <ShoppingCart size={18} />
@@ -99,7 +103,7 @@ export default function App(): JSX.Element {
             <ShoppingCart size={18} />
             {quantity !== 0 && <span>{quantity}</span>}
           </RouterLink> */}
-          <button className="btn btn-primary"
+          <button className="btn btn-outline-dark"
             type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvas2"
             aria-controls="offcanvas2">
@@ -108,11 +112,20 @@ export default function App(): JSX.Element {
             {wishlistQuantity !== 0 && <span>{wishlistQuantity}</span>}
           </button>
 
-          <RouterLink to="auth">
-            <User size={18} />
-          </RouterLink>
 
-
+          {logged ? (
+            <>
+              {`Welcome ${username}`}
+              <RouterLink to="/" onClick={() => { dispatch(logout()); }}>Log out</RouterLink>
+              
+            </>
+          ) : (
+            <button className="btn btn-outline-dark" >
+            <RouterLink to="/auth">
+              <User size={18} />
+            </RouterLink>
+            </button>
+          )}
         </Navbar.Content>
 
         <Navbar.Collapse>
