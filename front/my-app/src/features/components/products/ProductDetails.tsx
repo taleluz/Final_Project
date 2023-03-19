@@ -80,7 +80,7 @@ const ProductDetails = () => {
               Add to cart </button>
 
        
-              <button className="btn btn-primary"
+              <button className="btn btn-outline-dark"
                 type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvas2"
                 aria-controls="offcanvas2" onClick={() => handleAddToWishlist(product)}>
