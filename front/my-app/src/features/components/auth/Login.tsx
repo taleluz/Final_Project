@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../../app/hooks';
 import {
 loginAsync, registerAsync , selectRegistered
 
-} from '../features/login/loginSlice';
+} from '../../login/loginSlice';
 import styles from './Counter.module.css';
 import { CompletionTriggerKind } from 'typescript';
 
@@ -62,12 +62,12 @@ useEffect(() => {
  
   return (
     <div>
-      Login
+
       <br></br>
-    username: <input onChange={(e)=> setusername(e.target.value)}></input>
-    password: <input onChange={(e)=> setpassword(e.target.value)}></input>
-    <button onClick={()=> dispatch(loginAsync({username, password}))}>Login</button>
-    Remember me<input onChange={(e)=>setremember(e.target.checked)}  type={'checkbox'}></input>
+    username: <input onChange={(e)=> setusername(e.target.value)}></input><br></br>
+    password: <input onChange={(e)=> setpassword(e.target.value)}></input><br></br>
+    Remember me<input onChange={(e)=>setremember(e.target.checked)}  type={'checkbox'}></input><br></br>
+    <button onClick={()=> dispatch(loginAsync({username, password}))}>Login</button><br></br>
 
     </div>
   );

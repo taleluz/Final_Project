@@ -55,13 +55,11 @@ export const cartSlice = createSlice({
 
     addToCart: (state, { payload }: PayloadAction<CartItemType>) => {
       
-      // console.log(state.quantity)
 
       const isItemExist = state.cartItems.find((item) => item.id === payload.id);
       if (!isItemExist) {
         state.cartItems = [...state.cartItems, { ...payload }];
         state.quantity += payload.quantity
-        // console.log(state.cartItems)
 
       } else {
         state.cartItems = state.cartItems.map((item) => {
@@ -90,7 +88,6 @@ export const cartSlice = createSlice({
       saveState(state);
     },
     addProdQuantity: (state, { payload }: PayloadAction<CartItemType>) => {
-      console.log(payload)
       const isItemExist = state.cartItems.find((item) => item.id === payload.id);
       if (!isItemExist) {
         state.cartItems = [...state.cartItems, { ...payload, quantity: 1 }];

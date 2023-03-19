@@ -108,7 +108,7 @@ export default function App(): JSX.Element {
             {wishlistQuantity !== 0 && <span>{wishlistQuantity}</span>}
           </button>
 
-          <RouterLink to="#">
+          <RouterLink to="auth">
             <User size={18} />
           </RouterLink>
 

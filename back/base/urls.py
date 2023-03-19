@@ -1,4 +1,6 @@
 from base.views.product_views import ProductView
+from base.views.login_views import register
+from base.serializers import MyTokenObtainPairView
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
@@ -7,9 +9,11 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-
 urlpatterns = [
     path('products/', ProductView.as_view() ,name='product_list'),
+    path('login/', MyTokenObtainPairView.as_view()),
+    path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', register, name='register'),
     # path('private/',views.private ),
     # path('product/', views.ProductView.as_view()),
     # path('product/<pk>', views.ProductView.as_view()),

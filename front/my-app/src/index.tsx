@@ -6,9 +6,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { Login } from './components/Login';
+import { Login } from './features/components/auth/Login';
 import Profile from './components/Profile';
-import { Register } from './components/Register';
+import { Register } from './features/components/auth/Register';
 import Contact from './components/Contact';
 import GeneralGallery from './components/GeneralGallery';
 import Albums from './components/Albums';
@@ -17,6 +17,7 @@ import ProductDetails from './features/components/products/ProductDetails';
 import Cart from './features/components/cart/Cart';
 import Wishlist from './features/components/wishlist/Wishlist';
 import Products from './features/components/products/Products';
+import Authpage from './features/components/auth/Authpage';
 
 
 
@@ -39,6 +40,7 @@ root.render(
             </Route>
             <Route path="/cart" element={<Cart/>} />
             <Route path="/wishlist" element={<Wishlist/>} />
+            <Route path="/auth" element={<Authpage/>} />
 
             <Route path="upload" element={<GeneralGallery />}/> 
       

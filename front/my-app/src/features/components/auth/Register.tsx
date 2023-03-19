@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../../app/hooks';
 import {
 loginAsync, registerAsync , selectRegistered
 
-} from '../features/login/loginSlice';
+} from '../../login/loginSlice';
 import styles from './Counter.module.css';
 import { CompletionTriggerKind } from 'typescript';
 import { useNavigate } from 'react-router-dom';
@@ -45,11 +45,11 @@ export function Register() {
    
     return (
       <div>
-        Register
+        
         <br></br>
-      username: <input onChange={(e)=> setusername(e.target.value)}></input>
-      password: <input onChange={(e)=> setpassword(e.target.value)}></input>
-      email: <input onChange={(e)=> setemail(e.target.value)}></input>
+      username: <input onChange={(e)=> setusername(e.target.value)}></input><br></br>
+      password: <input onChange={(e)=> setpassword(e.target.value)}></input><br></br>
+      email: <input onChange={(e)=> setemail(e.target.value)}></input><br></br>
       {/* <button onClick={()=>dispatch(registerAsync({username, password, email}))}>Register</button> */}
       <button onClick={handleClick}>Register</button>
 

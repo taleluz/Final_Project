@@ -121,3 +121,13 @@
     justify-content: center;
   }
 }
+
+
+.offcanvas-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.offcanvas-title {
+  margin: 0 auto;
+}

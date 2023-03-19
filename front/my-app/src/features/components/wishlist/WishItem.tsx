@@ -5,6 +5,7 @@ import  "../../../styles/details.css"
 import { Link } from "react-router-dom";
 import { removeFromWishlist, addWishlistItemToCart } from "../../../services/wishlistSlice";
 import { addProdQuantity, addToCart } from "../../../services/cartSlice";
+
 interface Props {
 item: CartItemType;
 }

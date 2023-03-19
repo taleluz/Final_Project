@@ -6,21 +6,18 @@ import CartItemType from "../../../models/cartItem";
 import { clearCart } from "../../../services/cartSlice";
 import "../../../styles/cart.css";
 import CartItem from "./CartItem";
-
+import "../../../styles/cart.css";
 
 const Cart = () => {
   const dispatch = useAppDispatch();
   const { cartItems, totalAmount, quantity } = useAppSelector((state: RootState) => state.cart);
 
-  // if (quantity === 0) {
-  //   return <h2 className="no-items">No items in cart...</h2>;
-  // }
-
-
+ 
   return (
+          /* style to center the header text to middle in wishlistItem component from cart.css */
     <div className="offcanvas offcanvas-end" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div className="offcanvas-header">
-      <h5 className="offcanvas-title" id="offcanvasRightLabel">Cart</h5>
+      <h4 className="offcanvas-title" id="offcanvasRightLabel">Cart</h4>
       <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
@@ -33,13 +30,18 @@ const Cart = () => {
               <CartItem key={item.id} item={item} />
             ))}
             <div className="d-flex justify-content-between mt-3">
-              <strong>Total:</strong>
-              <span>${totalAmount ? totalAmount.toFixed(2) : '0.00'}</span>
+              <h5>Just: ${totalAmount ? totalAmount.toFixed(2) : '0.00'}</h5>
               <button
                 className="btn btn-danger mt-3"
                 onClick={() => dispatch(clearCart())}
               >
                 Clear Cart
+              </button>
+              <button
+                className="btn btn-danger mt-3"
+                onClick={() => dispatch(clearCart())}
+              >
+              CheckOut
               </button>
             </div>
           </>
