@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navbar, Button, Link, Text, Card, Radio, Input } from "@nextui-org/react";
 import { ShoppingCart, Heart, User } from "react-feather";
-import { Outlet } from 'react-router-dom';
+import { Outlet, Route } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { Link as RouterLink } from 'react-router-dom';
 import { clearCart } from "./services/cartSlice"
@@ -10,15 +10,17 @@ import "../src/styles/cart.css";
 import Cart from "./features/components/cart/Cart";
 import Wishlist from "./features/components/wishlist/Wishlist"
 import CartItem from "./features/components/cart/CartItem";
-import { Content } from "./features/components/navbar/Content";
 import SearchIcon from "./features/components/navbar/SearchIcon";
 import { VariantsSelectorWrapper } from "./features/components/navbar/VariantsSelectorWrapper";
 import { Layout } from "./features/components/navbar/Layout";
 import { AcmeLogo } from "./features/components/navbar/Acmelogo";
+
 import { } from "./services/wishlistSlice";
 import {
   loginAsync, selectLooged, logout, selectAccess, selectUsername
 } from './features/login/loginSlice';
+import About from "./features/components/navbar/About";
+import { HomePage } from "./features/components/navbar/HomePage";
 
 export default function App(): JSX.Element {
 
@@ -31,6 +33,8 @@ export default function App(): JSX.Element {
   const { quantity: wishlistQuantity } = useAppSelector((state: RootState) => state.wishlist);
   const logged = useAppSelector(selectLooged)
   const username = useAppSelector(selectUsername)
+  const [showAbout, setShowAbout] = useState(false);
+
 
 
 
@@ -40,6 +44,7 @@ export default function App(): JSX.Element {
     { name: "Closets", path: "/category/Closets" },
     { name: "Chairs", path: "/category/Chairs" },
     { name: "Tables", path: "/category/Tables" },
+    { name: "About", path: "/About" },
   ];
 
 
@@ -52,16 +57,25 @@ export default function App(): JSX.Element {
 
         <Navbar.Brand>
           <Navbar.Toggle aria-label="toggle navigation" />
+          <RouterLink to="/home"  style={{textDecoration: 'none' , color:"black"}}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+
           <AcmeLogo />
+          
           <Text b color="inherit" hideIn="xs">
-            ACME
+            Vital
           </Text>
+          </div>
+          </RouterLink>
         </Navbar.Brand>
+      
+
         <Navbar.Content
           css={{
             "@xsMax": {
               w: "100%",
               jc: "space-between",
+             
             },
           }}
         >
@@ -70,6 +84,7 @@ export default function App(): JSX.Element {
               "@xsMax": {
                 w: "100%",
                 jc: "center",
+                
               },
             }}
           >
@@ -122,7 +137,7 @@ export default function App(): JSX.Element {
           ) : (
             <button className="btn btn-outline-dark" >
             <RouterLink to="/auth">
-              <User size={18} />
+              <User size={18} style={{"color": "black"}} />
             </RouterLink>
             </button>
           )}
@@ -144,10 +159,10 @@ export default function App(): JSX.Element {
           ))}
         </Navbar.Collapse>
       </Navbar>
+      
       <Outlet />
-
     </Layout >
+    
   )
 }
-
 

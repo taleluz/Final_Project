@@ -20,6 +20,8 @@ import LandingPage from './features/components/auth/pages/LandingPage';
 import LoginPage from './features/components/auth/pages/LoginPage';
 import RegisterPage from './features/components/auth/pages/RegisterPage';
 import Checkout from './features/components/checkout/Checkout';
+import About from './features/components/navbar/About';
+import {  HomePage } from './features/components/navbar/HomePage';
 
 
 
@@ -53,7 +55,8 @@ root.render(
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/checkout" element={<Checkout />} />
-
+            <Route path="/about" element={<About />} />
+            <Route path="/home" element={<HomePage />} />
 
           </Route>
 

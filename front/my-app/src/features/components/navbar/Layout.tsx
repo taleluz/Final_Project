@@ -1,4 +1,4 @@
-import { Content } from "./Content";
+import { HomePage } from "./HomePage";
 import { Box } from "./Box";
 
 interface LayoutProps {
@@ -12,6 +12,5 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => (
     }}
   >
     {children}
-    <Content />
   </Box>
 );
