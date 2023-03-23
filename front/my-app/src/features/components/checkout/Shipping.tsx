@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Form } from 'react-router-dom';
+import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
+import { Form, Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
 import ShippingType from '../../../models/shipping';
 import { createorderAsync } from '../../../services/shippingSlice';
@@ -22,18 +23,24 @@ const Shipping = () => {
     const [country, setCountry] = useState("");
     const [phone, setPhone] = useState("");
 
-const cart = localStorage.getItem("cart"); // Get the value of the "cart" key from localStorage
-const cartObject = JSON.parse(cart ||""); // Convert the JSON string to a JavaScript object
-const cartItems = cartObject.cartItems; // Get the value of "cartItems" from the "cart" object
-const totalPrice = cartObject.totalAmount
+    const cart = localStorage.getItem("cart"); // Get the value of the "cart" key from localStorage
+    const cartObject = JSON.parse(cart || ""); // Convert the JSON string to a JavaScript object
+    const cartItems = cartObject.cartItems; // Get the value of "cartItems" from the "cart" object
+    const totalPrice = cartObject.totalAmount
 
-    
+    // cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2)
+    // cart.shippingPrice = (cart.itemsPrice > 100 ? 0 : 10).toFixed(2)
+    // cart.taxPrice = Number((0.082) * cart.itemsPrice).toFixed(2)
+
+    // cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
 
     const handleorder = () => {
         dispatch(createorderAsync(
-            { address, city, country, phone, postalCode,cartItems,taxPrice:0,
-                shippingPrice:0, totalPrice }
-            ))
+            {
+                address, city, country, phone, postalCode, cartItems, taxPrice: 0,
+                shippingPrice: 0, totalPrice
+            }
+        ))
     }
 
 
@@ -41,41 +48,11 @@ const totalPrice = cartObject.totalAmount
         e.preventDefault();
     }
 
-    //     const response = await fetch('/api/orders/add/', {
-    //       method: 'POST',
-    //     //   headers: {
-    //     //     'Content-Type': 'application/json',
-    //     //     Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-    //     //   },
-    //       body: JSON.stringify({
-    //         orderItems: [],
-    //         shippingAddress: {
-    //           address,
-    //           city,
-    //           postalCode,
-    //           country,
-    //           phone,
-    //         },
-    //       
-    //         itemsPrice: 0,
-    //         taxPrice: 0,
-    //         shippingPrice: 0,
-    //         totalPrice: 0,
-    //       }),
-    //     });
-    //     const data = await response.json();
-    //     console.log(data);
-
-    //   };
 
 
 
     return (
         <div>
-            {/* bio: <input onChange={(e) => setbio(e.target.value)}></input>
-      location: <input onChange={(e) => setlocation(e.target.value)}></input>
-      location: <input onChange={(e) => setlocation(e.target.value)}></input>
-      birth_date: <input type={'date'} onChange={(e) => setbirth_date(e.target.value)}></input> */}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="address">Address</label>
@@ -133,11 +110,86 @@ const totalPrice = cartObject.totalAmount
                     />
                 </div>
             </form>
-            {/* <button onClick={()=> dispatch(createorderAsync({address,city,country,phone,postalCode}))}>continue</button> */}
+            <Row>
+                <Col md={8}>
+                    <ListGroup variant='flush'>
+            <ListGroup.Item>
+                <h2>Order Items</h2>
+                {cartItems.length === 0 ? <div >Your cart is empty</div> : (
+                    <ListGroup variant='flush'>
+                        {cartItems.map((item: any, index: any) => (
+                            <ListGroup.Item key={index}>
+                                <Row>
+                                    <Col md={1}>
+                                        <img src={item.image} alt={item.name} width={100} height={100} />
+                                    </Col>
+                                    <Col>
+                                        <Link to={`#`}>{item.name}</Link>
+                                    </Col>
+                                    <Col md={4}>
+                                        {item.quantity} X ${item.price} = ${(item.quantity * item.price).toFixed(2)}
+                                    </Col>
+                                </Row>
+                            </ListGroup.Item>
+                        ))}
+                    </ListGroup>
+                )}
+            </ListGroup.Item>
+        </ListGroup>
 
-            <button onClick={handleorder} >continue</button>
+                </Col >
+    <Col md={4}>
+        <Card>
+            <ListGroup variant='flush'>
+                <ListGroup.Item>
+                    <h2>Order Summary</h2>
+                </ListGroup.Item>
 
-        </div>
+                <ListGroup.Item>
+                    <Row>
+                        <Col>Items:</Col>
+                        <Col>{cartObject.quantity}</Col>
+                    </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                    <Row>
+                        <Col>Shipping:</Col>
+                        <Col>$jmj</Col>
+                    </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                    <Row>
+                        <Col>Tax:</Col>
+                        <Col>$dgfdhdgdhfg</Col>
+                    </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                    <Row>
+                        <Col>Total:</Col>
+                        <Col>${cartObject.totalAmount}</Col>
+                    </Row>
+                </ListGroup.Item>
+
+
+                <ListGroup.Item>
+                    {/* {error && <Message variant='danger'>{error}</Message>} */}
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                <button onClick={handleorder} >continue to payment</button>
+
+                </ListGroup.Item>
+
+            </ListGroup>
+        </Card>
+    </Col>
+</Row>
+
+    </div>
+           
 
     )
 };
