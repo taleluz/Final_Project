@@ -9,11 +9,19 @@ import CartItem from "./CartItem";
 import "../../../styles/cart.css";
 import { Link } from "react-router-dom";
 import { selectLooged } from "../../login/loginSlice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useAppDispatch();
   const { cartItems, totalAmount, quantity } = useAppSelector((state: RootState) => state.cart);
   const logged = useAppSelector(selectLooged)
+
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    navigate("/shipping");
+  }
+  
 
 
 
@@ -42,18 +50,19 @@ const Cart = () => {
                 Clear Cart
               </button>
 
-              {logged ? (
+              { logged ? ( // <-- use isLoggedIn here
                 <button type="button" className="btn btn-danger mt-3" data-bs-dismiss="offcanvas"
                   aria-label="Close">
-                  <Link to="/checkout">
+                  <Link to="/shipping">
                     Checkout
                   </Link>
                 </button>
 
               ) : (
-                <button type="button" className="btn btn-danger mt-3" data-bs-dismiss="offcanvas"
+                <button type="button" className="btn btn-danger mt-3" 
+                data-bs-dismiss="offcanvas"
                   aria-label="Close">
-                  <Link to="/auth">
+                  <Link to="/auth" onClick={handleCheckout}> {/* <-- add onClick to set isLoggedIn to true */}
                     Checkout
                   </Link>
                 </button>

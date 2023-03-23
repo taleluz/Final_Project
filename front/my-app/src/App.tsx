@@ -20,7 +20,8 @@ import {
   loginAsync, selectLooged, logout, selectAccess, selectUsername
 } from './features/login/loginSlice';
 import About from "./features/components/navbar/About";
-import { HomePage } from "./features/components/navbar/HomePage";
+import  HomePage  from "./features/components/navbar/HomePage";
+import Footer from "./features/components/navbar/Footer";
 
 export default function App(): JSX.Element {
 
@@ -161,6 +162,7 @@ export default function App(): JSX.Element {
       </Navbar>
       
       <Outlet />
+      <Footer/>
     </Layout >
     
   )

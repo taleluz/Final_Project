@@ -1,3 +1,4 @@
+from base.views.order_views import addOrderItems, getMyOrders, getOrderById, getOrders, updateOrderToDelivered, updateOrderToPaid
 from base.views.product_views import ProductView
 from base.views.login_views import register
 from base.serializers import MyTokenObtainPairView
@@ -14,18 +15,16 @@ urlpatterns = [
     path('login/', MyTokenObtainPairView.as_view()),
     path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', register, name='register'),
-    # path('private/',views.private ),
-    # path('product/', views.ProductView.as_view()),
-    # path('product/<pk>', views.ProductView.as_view()),
-    # path('gallery/', views.GalleryView.as_view()),
-    # path('gallery/<pk>', views.GalleryView.as_view()),
-    # path('profile/', views.ProfileView.as_view()),
-    # path('profile/<pk>', views.ProfileView.as_view()),
-    # path('albums/', views.AlbumsView.as_view()),
-    # path('albumstype/', views.AlbumsTypeView.as_view()),
-    # path('login/', views.MyTokenObtainPairView.as_view()),
-    # path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    # path('register/', views.register),
+    # admin : not neccessery
+    path('getorders', getOrders, name='orders'),
+    # not checked
+    path('add/', addOrderItems, name='add'),
+    # work
+    path('myorders/', getMyOrders, name='myorders'),
+    # not checked:
+    path('<str:pk>/deliver/', updateOrderToDelivered, name='order-delivered'),
+    path('<str:pk>/', getOrderById, name='user-order'),
+    path('<str:pk>/pay/', updateOrderToPaid, name='pay'),
 
 
 ]

@@ -19,10 +19,10 @@ import Products from './features/components/products/Products';
 import LandingPage from './features/components/auth/pages/LandingPage';
 import LoginPage from './features/components/auth/pages/LoginPage';
 import RegisterPage from './features/components/auth/pages/RegisterPage';
-import Checkout from './features/components/checkout/Checkout';
 import About from './features/components/navbar/About';
-import {  HomePage } from './features/components/navbar/HomePage';
-
+import   HomePage  from './features/components/navbar/HomePage';
+import Shipping from './features/components/checkout/Shipping';
+// import CheckOutSteps from './features/components/checkout/CheckOutSteps';
 
 
 const container = document.getElementById('root')!;
@@ -54,7 +54,8 @@ root.render(
             <Route path="/auth" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/shipping" element={<Shipping />}/>
+           
             <Route path="/about" element={<About />} />
             <Route path="/home" element={<HomePage />} />
 

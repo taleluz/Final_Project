@@ -5,6 +5,7 @@ import loginReducer from '../features/login/loginSlice';
 import profileReducer from '../features/Profile/profileSlice';
 import cartReducer from '../services/cartSlice';
 import productsReducer from '../services/productsSlice';
+import shippingReducer from '../services/shippingSlice';
 import wishlistReducer from '../services/wishlistSlice';
 
 
@@ -18,6 +19,7 @@ export const store = configureStore({
     products: productsReducer,
     cart: cartReducer,
     wishlist: wishlistReducer,
+    shipping :shippingReducer
    
   },
 });

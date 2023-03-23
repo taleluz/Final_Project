@@ -12,7 +12,7 @@ const Products = () => {
   console.log(name)
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(name);
+  const [selectedCategory, setSelectedCategory] = useState<any>(name);
   const [selectedSubcat, setSelectedSubcat] = useState<string | null>(null);
 
 
@@ -30,8 +30,8 @@ const Products = () => {
     : [...new Set(products.map((product) => product.subcategory))];
 
   const handleSubcatClick = (category: string, subcat: string) => {
-    setSelectedCategory(category);
-    setSelectedSubcat(subcat);
+    setSelectedCategory( category);
+    setSelectedSubcat( subcat);
   };
 
   const handleAddToCart = (product:any) => {
@@ -64,23 +64,23 @@ const Products = () => {
         {filteredSubcats.map((subcat) => (
           <span key={subcat}>
             {' '}
-            <Link
-              to="#"
-              onClick={() => handleSubcatClick(selectedCategory ? selectedCategory : "", subcat)}
+            <button
+              
+              onClick={() => handleSubcatClick( selectedCategory || "", subcat  )}
               className="subcategory-link"
               style={{
-                backgroundImage: `url(http://127.0.0.1:8000${filteredProducts.find(
+                backgroundImage: `url(http://127.0.0.1:8000${filteredProducts.filter(
                   (product) =>
                     product.category === selectedCategory &&
                     product.subcategory === subcat
-                )?.subimage})`,
+                )[0]?.subimage})`,
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
               }}
             >
               <br></br>
             {subcat}
-            </Link>
+            </button>
             |
           </span>
         

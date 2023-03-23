@@ -43,85 +43,52 @@ class Product(models.Model):
      	return self.name
 
 
-# class Profile(models.Model):
-#     user = models.ForeignKey(User, related_name='profile_set', on_delete=models.CASCADE)
-#     firstName = models.CharField(max_length=30,null=False,default="noa")
-#     lastname = models.CharField(max_length=30,null=False,default="ruderman")
-#     apartment = models.CharField(max_length=100, blank=True)
-#     floor = models.CharField(max_length=100, blank=True)
-#     street = models.CharField(max_length=100, blank=True)
-#     city = models.CharField(max_length=25,null=False,default="Haifa")
-#     country = models.CharField(max_length=25,null=False,default="Israel")
-#     phone_number = models.CharField(max_length=20, blank=True)
-#     zip_code = models.CharField(max_length=10, blank=True)
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    taxPrice = models.DecimalField(
+        max_digits=7, decimal_places=2, null=True, blank=True)
+    shippingPrice = models.DecimalField(
+        max_digits=7, decimal_places=2, null=True, blank=True)
+    totalPrice = models.DecimalField(
+        max_digits=7, decimal_places=2, null=True, blank=True)
+    isPaid = models.BooleanField(default=False)
+    paidAt = models.DateTimeField(auto_now_add=False, null=True, blank=True)
+    isDelivered = models.BooleanField(default=False)
+    deliveredAt = models.DateTimeField(
+        auto_now_add=False, null=True, blank=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    _id = models.AutoField(primary_key=True, editable=False)
 
-#     def __str__(self):
-#         return self.user.username
-
-
-# class Order(models.Model):
-#     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-#     date = models.DateField(default=datetime.datetime.now())
-#     delivery_details = models.ForeignKey(Profile, on_delete=models.SET_NULL,null=True)
-#     total = models.DecimalField(max_digits=12,decimal_places=2,null=True,blank=True)
-#     payment_method = models.CharField(max_length=20,null=True,blank=True)
-
-#     def __str__(self):
-#         return self.user.username
+    def __str__(self):
+        return str(self.createdAt)
 
 
-# class OrderDetail(models.Model):
-#     product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True)
-#     order  = models.ForeignKey(Order,on_delete=models.CASCADE,null=True)
-#     quantity = models.PositiveIntegerField()
-#     subtotal = models.DecimalField(max_digits=12, decimal_places=2)
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    quantity = models.IntegerField(null=True, blank=True, default=0)
+    price = models.DecimalField(
+        max_digits=7, decimal_places=2, null=True, blank=True)
+    image = models.CharField(max_length=200, null=True, blank=True)
+    _id = models.AutoField(primary_key=True, editable=False)
+
+    def __str__(self):
+        return str(self.name)
 
 
-#     class Meta:
-#         db_table = 'Orders Detail'
+class ShippingAddress(models.Model):
+    order = models.OneToOneField(
+        Order, on_delete=models.CASCADE, null=True, blank=True)
+    address = models.CharField(max_length=200, null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
+    postalCode = models.CharField(max_length=200, null=True, blank=True)
+    country = models.CharField(max_length=200, null=True, blank=True)
+    shippingPrice = models.DecimalField(
+        max_digits=7, decimal_places=2, null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
+    _id = models.AutoField(primary_key=True, editable=False)
 
+    def __str__(self):
+        return str(self.address)
 
-#     def __str__(self):
-#         return str(self.product)
-
-# # Create your models here.
-# class Product(models.Model):
-#     user =models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-#     desc = models.CharField(max_length=50,null=True,blank=True)
-#     price = models.DecimalField(max_digits=5,decimal_places=2)
-#     createdTime=models.DateTimeField(auto_now_add=True)
-#     fields =['desc','price']
- 
-#     def __str__(self):
-#            return self.desc
-
-
-
-# class Gallery(models.Model):
-#     user =models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-#     title = models.CharField(max_length=50)
-#     description = models.CharField(max_length=100)
-#     image = models.ImageField(null=True,blank=True,default='/placeholder.png')
-
-#     def __str__(self):
-#         return self.title
-
-
-
-# class Profile(models.Model):
-#     # cascade- שתמחוק את היוזר תמחוק גם את הפרופייל שלו
-#     user = models.ForeignKey(User, related_name='profile_set', on_delete=models.CASCADE)
-#     # user = models.OneToOneField(User, on_delete =models.CASCADE)
-#     bio = models.TextField(max_length=500, blank=True)
-#     location = models.CharField(max_length=30, blank=True)
-#     birth_date = models.DateField(null=True, blank=True)
-
-
-# class Albums(models.Model):
-#     user = models.ForeignKey(User, related_name='albums_set', on_delete=models.CASCADE)
-#     desc = models.TextField(max_length=500, blank=True)
-
-# class AlbumsType(models.Model):
-#     user = models.ForeignKey(User, related_name='albumstypes_set', on_delete=models.CASCADE)
-#     desc = models.TextField(max_length=500, blank=True)
-#     catId = models.ForeignKey(Albums, on_delete=models.CASCADE)
